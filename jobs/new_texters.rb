@@ -14,9 +14,9 @@ def get_data time, query
   #rs = DataAccessor.instance.query(query)
 
   count = 0
-  #rs.each_hash do |h|
-  #  count = h['count']
-  #end
+  rs.each_hash do |h|
+    count = h['count']
+  end
 
   {'x' => time.to_i, 'y' => count.to_i}
 end
