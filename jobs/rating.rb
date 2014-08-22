@@ -1,18 +1,15 @@
 require 'dotenv'
-require 'mysql'
+require_relative 'lib/DataAccessor'
 Dotenv.load
 
 days_back = 10
-base_query = 'SELECT count(*) as count, conversation_rating as rating FROM conversation WHERE DATE(startTime) = "%s" AND conversation_rating IS NOT NULL GROUP BY conversation_rating'
+base_query = 'SELECT count(*) as count, conversation_rating as rating FROM conversation
+  WHERE DATE(startTime) = "%s" AND conversation_rating IS NOT NULL GROUP BY conversation_rating'
 
-con = Mysql.new(ENV['MYSQL_HOST'], ENV['MYSQL_USER'], ENV['MYSQL_PASS'], ENV['MYSQL_DB'])
 
-time = Time.now.utc - 60*60*24*(days_back + 1)
-
-data = []
-(0..days_back).each do |i|
-  query = base_query % time.strftime('%Y-%m-%d')
-  rs = con.query(query)
+def get_data time, query
+  query = query % time.strftime('%Y-%m-%d')
+  rs = DataAccessor.instance.query(query)
 
   same = better = worse = 0
   rs.each_hash do |h|
@@ -27,12 +24,26 @@ data = []
   end
 
   rating = ((same * 50) + (better * 100)) / (same + better + worse)
-  data << {x: time.to_i, y: rating.to_i}
 
+  {'x' => time.to_i, 'y' => rating.to_i}
+end
+
+data = []
+time = Time.now.utc - 60*60*24*(days_back + 1)
+
+(0..days_back).each do |i|
+  data << get_data(time, base_query)
   time += 60*60*24
 end
 
-SCHEDULER.every '24h', :first_in => 0 do |job|
-  send_event("rating", {points: data})
+SCHEDULER.every '30m', :first_in => 0 do |job|
+  if time.to_date < Time.now.utc.to_date
+    data.shift
+    time += 60*60*24
+    data << get_data(time, base_query, data)
+  end
+
+  send_event('rating', {points: data})
+  send_event('rating-number', {current: data[-1]['y'], last: data[-8]['y']})
 end
 
