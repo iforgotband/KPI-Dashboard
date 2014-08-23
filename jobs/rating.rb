@@ -23,7 +23,7 @@ class Rating < DashboardMetric
 
     rating = ((same * 50) + (better * 100)) / (same + better + worse)
 
-    {'x' => @time.to_i, 'y' => rating.to_i}
+    {'x' => @time.to_time.to_i, 'y' => rating.to_i}
   end
 end
 

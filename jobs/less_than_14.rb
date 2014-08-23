@@ -6,8 +6,8 @@ class LessThan14
   @@query = 'SELECT (takenFromQueue - addedToQueue) as diff FROM conversation WHERE DATE(CONVERT_TZ(startTime, "+00:00", "-04:00")) = "%s"'
 
   def initialize
-    @today = Time.now - 60*60*24
-    @last_week = @today - 60*60*24*7
+    @today = DataAccessor.instance.lastDay
+    @last_week = @today - 7
 
     @last = self.get_data(@last_week)
     @current = self.get_data(@today)
@@ -31,8 +31,8 @@ class LessThan14
 
   def update
     if @today.to_date < DataAccessor.instance.lastDay
-      @today += 60*60*24
-      @last_week += 60*60*24
+      @today += 1
+      @last_week += 1
 
       @last = self.get_data(@last_week)
       @current = self.get_data(@today)

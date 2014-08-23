@@ -17,7 +17,7 @@ class NewTexters < DashboardMetric
       count = h['count']
     end
 
-    {'x' => @time.to_i, 'y' => count.to_i}
+    {'x' => @time.to_time.to_i, 'y' => count.to_i}
   end
 end
 

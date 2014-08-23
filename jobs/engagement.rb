@@ -19,7 +19,7 @@ class Engagement < DashboardMetric
 
     percent = engaged / (engaged + nonengaged) * 100
 
-    {'x' => @time.to_i, 'y' => percent.to_i}
+    {'x' => @time.to_time.to_i, 'y' => percent.to_i}
   end
 end
 
