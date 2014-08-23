@@ -1,42 +1,31 @@
-require 'dotenv'
-require_relative 'lib/DataAccessor'
-Dotenv.load
+require_relative 'lib/DashboardMetric'
 
-days_back = 10
-base_query = 'SELECT count(*) as count FROM actor a WHERE type != "Internal" AND id NOT IN (
-  SELECT actor_id FROM message WHERE DATE(timestamp) < "%s"
-) AND id IN (
-  SELECT actor_id FROM message WHERE DATE(timestamp) < "%s"
-);'
+class NewTexters < DashboardMetric
 
-def get_data time, query
-  query = query % [time.strftime('%Y-%m-%d'), (time + 60*60*24).strftime('%Y-%m-%d')]
-  rs = DataAccessor.instance.query(query)
+  @@query = 'SELECT count(*) as count FROM actor a WHERE type != "Internal" AND id NOT IN (
+              SELECT actor_id FROM message WHERE DATE(CONVERT_TZ(timestamp, "+00:00", "-04:00")) < "%s"
+            ) AND id IN (
+              SELECT actor_id FROM message WHERE DATE(CONVERT_TZ(timestamp, "+00:00", "-04:00")) < "%s"
+            );'
 
-  count = 0
-  rs.each_hash do |h|
-    count = h['count']
+  def get_data
+    query = @@query % [@time.strftime('%Y-%m-%d'), (@time + 60*60*24).strftime('%Y-%m-%d')]
+    rs = @data_accessor.query(query)
+
+    count = 0
+    rs.each_hash do |h|
+      count = h['count']
+    end
+
+    {'x' => @time.to_i, 'y' => count.to_i}
   end
-
-  {'x' => time.to_i, 'y' => count.to_i}
 end
 
-time = Time.now.utc - 60*60*24*(days_back + 1)
-data = []
-
-(0..days_back).each do |i|
-  data << get_data(time, base_query)
-  time += 60*60*24
-end
+nt = NewTexters.new
 
 SCHEDULER.every '30m', :first_in => 0 do |job|
-  if time.to_date < Time.now.utc.to_date
-    data.shift
-    time += 60*60*24
-    data << get_data(time, base_query, data)
-  end
+  nt.update
 
-  send_event('new-texters', {points: data})
-  send_event('new-texters-number', {current: data[-1]['y'], last: data[-8]['y']})
+  send_event('new-texters', {points: nt.data})
+  send_event('new-texters-number', {current: nt.data[-1]['y'], last: nt.data[-8]['y']})
 end
-

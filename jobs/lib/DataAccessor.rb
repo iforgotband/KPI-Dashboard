@@ -1,5 +1,8 @@
 require 'singleton'
 require 'mysql'
+require 'dotenv'
+
+Dotenv.load
 
 class DataAccessor
   include Singleton

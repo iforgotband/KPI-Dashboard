@@ -1,11 +1,15 @@
 <script type='text/javascript'>
 $(function() {
-Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":2,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":2,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":2,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":2,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1}]')
+Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":2,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":2,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":2,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":2,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":1}]')
 });
 </script>
 
 <% content_for :title do %>CTL KPIs<% end %>
 <div class="gridster">
+  <div class="clearfix">
+    <img src="http://www.crisistextline.org/logo.png" style="max-width: 230px; margin: 8px; " />
+    <h1 style="display: inline; position: relative; top: 6px">KPI Dashboard</h1>
+  </div>
   <ul>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="pingdom-status-907714" data-view="Pingdomstatus" data-title="Platform Status"></div>
@@ -16,10 +20,10 @@ Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":1,"row":
 
 
     <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="engagement" data-view="Rickshawgraph" data-min="45" data-title="Engagement Rate (yesterday)" data-colors="#dd0000"></div>
+      <div data-id="engagement" data-view="Rickshawgraph" data-min="45" data-title="Engagement Rate (yesterday)" data-colors="#dd0000" data-suffix="%"></div>
     </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="engagement-number" data-view="Number" data-min="45" data-title="Engagement" data-colors="#dd0000"></div>
+      <div data-id="engagement-number" data-view="Number" data-min="45" data-title="Engagement" data-suffix="%"></div>
     </li>
 
 
@@ -27,7 +31,7 @@ Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":1,"row":
       <div data-id="rating" data-view="Rickshawgraph" data-min="60" data-title="Texter rating" data-colors="#dd0000"></div>
     </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="rating-number" data-view="Number" data-min="60" data-title="Rating" data-colors="#dd0000"></div>
+      <div data-id="rating-number" data-view="Number" data-min="60" data-title="Rating"></div>
     </li>
 
 
@@ -43,7 +47,11 @@ Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":1,"row":
       <div data-id="new-texters" data-view="Rickshawgraph" data-min="60" data-title="New Texters" data-colors="#dd0000"></div>
     </li>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="new-texters-number" data-view="Number" data-min="60" data-title="New Texters" data-colors="#dd0000"></div>
+      <div data-id="new-texters-number" data-view="Number" data-min="60" data-title="New Texters"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="less-14" data-view="Number" data-min="60" data-title="<14 min" data-suffix="%"></div>
     </li>
 
 
