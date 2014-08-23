@@ -30,7 +30,7 @@ class LessThan14
   end
 
   def update
-    if @today.to_date < Time.now.to_date - 60*60*24
+    if @today.to_date < DataAccessor.instance.lastDay
       @today += 60*60*24
       @last_week += 60*60*24
 

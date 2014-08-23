@@ -17,7 +17,7 @@ class DashboardMetric
   end
 
   def update
-    if @time.to_date < Time.now.to_date - 60*60*24
+    if @time.to_date < @data_accessor.lastDay
       @data.shift
       @time += 60*60*24
       @data << self.get_data

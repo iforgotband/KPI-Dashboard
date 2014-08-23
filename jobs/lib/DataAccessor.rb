@@ -16,4 +16,9 @@ class DataAccessor
     @connection.query(query)
   end
 
+  def lastDay
+    rs = @connection.query('select timestamp from message order by id desc limit 1')
+    Date.parse(rs.fetch_row[0]) - 1
+  end
+
 end
