@@ -32,9 +32,9 @@ SCHEDULER.every '50s', :first_in => 0 do |job|
   # Get the unix timestamps
   t24_hours = 86400 # 24 hours in seconds
   last24_hours = (Time.now.to_i - t24_hours )
-  t48_hours = t24_hours * 2
+  t48_hours = t24_hours * 7
   last48_hours = (Time.now.to_i - t48_hours )
-  t72_hours = t24_hours * 7
+  t72_hours = t24_hours * 30
   last72_hours = (Time.now.to_i - t72_hours )
   nowTime = (Time.now.to_i)
 
