@@ -23,7 +23,7 @@ end
 
 nt = NewTexters.new
 
-SCHEDULER.every '30m', :first_in => 0 do |job|
+SCHEDULER.every '30m', :first_in => '1s' do |job|
   nt.update
 
   send_event('new-texters', {points: nt.data})

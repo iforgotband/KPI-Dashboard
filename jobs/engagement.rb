@@ -25,7 +25,7 @@ end
 
 engage = Engagement.new
 
-SCHEDULER.every '30m', :first_in => 0 do |job|
+SCHEDULER.every '30m', :first_in => '1s' do |job|
   engage.update
 
   send_event('engagement', {points: engage.data})

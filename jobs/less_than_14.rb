@@ -42,7 +42,7 @@ end
 
 lt14 = LessThan14.new
 
-SCHEDULER.every '60m', :first_in => 0 do |job|
+SCHEDULER.every '60m', :first_in => '1s' do |job|
   lt14.update
   send_event('less-14', {current: lt14.current, last: lt14.last})
 end

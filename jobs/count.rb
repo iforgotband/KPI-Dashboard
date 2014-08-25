@@ -18,7 +18,7 @@ end
 
 count = Count.new
 
-SCHEDULER.every '30m', :first_in => 0 do |job|
+SCHEDULER.every '30m', :first_in => '1s' do |job|
   count.update
 
   send_event('count', {points: count.data})
