@@ -34,7 +34,7 @@ SCHEDULER.every '50s', :first_in => 0 do |job|
   last24_hours = (Time.now.to_i - t24_hours )
   t48_hours = t24_hours * 2
   last48_hours = (Time.now.to_i - t48_hours )
-  t72_hours = t24_hours * 3
+  t72_hours = t24_hours * 7
   last72_hours = (Time.now.to_i - t72_hours )
   nowTime = (Time.now.to_i)
 
