@@ -1,6 +1,8 @@
-{
-  "language": "ruby",
-  "group": "stable",
-  "dist": "trusty",
-  "os": "linux"
-}
+language: ruby
+rvm:
+  - 2.2
+install:
+  - gem install smashing
+  - bundle
+script:
+  - smashing start
