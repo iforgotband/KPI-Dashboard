@@ -4,6 +4,7 @@ gem 'smashing', '>= 1.0.0'
 
 gem 'dotenv'
 
+gem 'rake'
 gem 'ruby-mysql'
 gem 'pingdom-ruby'
 gem 'activesupport'
