@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/MySolace/KPI-Dashboard.svg?branch=master)](https://travis-ci.org/MySolace/KPI-Dashboard)
+
+---
+
 KPI-Dashboard
 ===
 
