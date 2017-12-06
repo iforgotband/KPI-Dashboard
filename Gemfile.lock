@@ -95,7 +95,7 @@ DEPENDENCIES
   pingdom-ruby
   rest-client
   ruby-mysql
-  smashing
+  smashing (>= 1.0.0)
   time_diff
 
 BUNDLED WITH
