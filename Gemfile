@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'smashing', '>= 1.0.0'
+gem 'smashing', '>= 1.1.0'
 
 gem 'dotenv'
 
